@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SidescrollerController : KinematicObject
 {
-    public bool hasPowerup;
+    
     /// <summary>
     /// Max horizontal speed of the player.
     /// </summary>
@@ -26,13 +26,14 @@ public class SidescrollerController : KinematicObject
     internal Animator animator;
     
     public Bounds Bounds => collider2d.bounds;
-
+    /*
     public GameObject powerupIndicator;
     public GameObject chestOpen;
     public GameObject chestClosed;
     public ParticleSystem explosionParticle;
     public AudioClip openChestSound;
     private AudioSource playerAudio;
+    public bool hasPowerup;
 
     private void OnTriggerEnter2D (Collider2D other)
     {
@@ -57,12 +58,12 @@ public class SidescrollerController : KinematicObject
             playerAudio.PlayOneShot(openChestSound, 1.0f);
         }
     }
-
+    */
 
     void Awake()
     {
-        playerAudio = GetComponent<AudioSource>();
-        hasPowerup = false;
+        //playerAudio = GetComponent<AudioSource>();
+        //hasPowerup = false;
         collider2d = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -87,7 +88,7 @@ public class SidescrollerController : KinematicObject
         UpdateJumpState();
         base.Update();
 
-        powerupIndicator.transform.position = transform.position + new Vector3(0.3f, -0.1f, 0);
+        // powerupIndicator.transform.position = transform.position + new Vector3(0.3f, -0.1f, 0);
     }
 
     void UpdateJumpState()
