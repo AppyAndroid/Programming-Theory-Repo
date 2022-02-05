@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SidescrollerController : KinematicObject
 {
+    public GameObject gameOverText;
+    public GameObject player;
     
     /// <summary>
     /// Max horizontal speed of the player.
@@ -26,40 +28,7 @@ public class SidescrollerController : KinematicObject
     internal Animator animator;
     
     public Bounds Bounds => collider2d.bounds;
-    /*
-    public GameObject powerupIndicator;
-    public GameObject chestOpen;
-    public GameObject chestClosed;
-    public ParticleSystem explosionParticle;
-    public AudioClip openChestSound;
-    private AudioSource playerAudio;
-    public bool hasPowerup;
-
-    private void OnTriggerEnter2D (Collider2D other)
-    {
-        if (other.CompareTag("Powerup"))
-        {
-            hasPowerup = true;
-            Destroy(other.gameObject);
-            powerupIndicator.SetActive(true);
-        }
-
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Chest") && hasPowerup)
-        {
-            chestClosed.SetActive(false);
-            chestOpen.SetActive(true);
-            Debug.Log("Collided with " + collision.gameObject.name + "with poweup set to " + hasPowerup);
-            powerupIndicator.SetActive(false);
-            explosionParticle.Play();
-            playerAudio.PlayOneShot(openChestSound, 1.0f);
-        }
-    }
-    */
-
+    
     void Awake()
     {
         //playerAudio = GetComponent<AudioSource>();
@@ -89,6 +58,12 @@ public class SidescrollerController : KinematicObject
         base.Update();
 
         // powerupIndicator.transform.position = transform.position + new Vector3(0.3f, -0.1f, 0);
+
+        if (gameObject.transform.position.y < -1)
+        {
+            gameOverText.SetActive(true);
+            player.SetActive(false);
+        }
     }
 
     void UpdateJumpState()
@@ -154,4 +129,5 @@ public class SidescrollerController : KinematicObject
         InFlight,
         Landed
     }
+
 }

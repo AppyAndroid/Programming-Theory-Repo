@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Timber : PickUp // INHERITANCE - child class
+public class Bomb : PickUp
 {
-    public GameObject bridge;
+    public ParticleSystem explosion;
+    public GameObject bolder;
     // Start is called before the first frame update
 
     protected override void HoldPickup(Transform parent) //POLYMORPHISM
@@ -30,7 +31,7 @@ public class Timber : PickUp // INHERITANCE - child class
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -44,10 +45,11 @@ public class Timber : PickUp // INHERITANCE - child class
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Bridge"))
+        if (other.gameObject.CompareTag("Bolder"))
         {
-            bridge.SetActive(true);
+            bolder.SetActive(false);
             pickUp.SetActive(false);
+            explosion.Play();
             hasPickUp = false;
         }
     }

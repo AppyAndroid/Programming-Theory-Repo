@@ -7,6 +7,9 @@ TagManager:
   - Chest
   - ChestOpen
   - Powerup
+  - Bridge
+  - Bomb
+  - Bolder
   layers:
   - Default
   - TransparentFX

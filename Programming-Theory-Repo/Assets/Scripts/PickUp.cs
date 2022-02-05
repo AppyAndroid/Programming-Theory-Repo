@@ -1,26 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PickUp : MonoBehaviour  // INHERITANCE - parent class
 {
     public GameObject pickUp;
-    public bool hasPickUp;
+    protected bool hasPickUp;
     public float y;
+    public static float x { get; private set; }  //Encapsulation
     public Transform player;
     //public Rigidbody2D playerRB;
     public GameObject chestOpen;
     public GameObject chestClosed;
+    public GameObject endingText;
     public ParticleSystem explosionParticle;
-    public AudioClip openChestSound;
-    private AudioSource playerAudio;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerAudio = GetComponent<AudioSource>();
         hasPickUp = false;
-        //playerRB = GetComponent<Rigidbody2D>();
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -34,15 +33,18 @@ public class PickUp : MonoBehaviour  // INHERITANCE - parent class
     protected virtual void HoldPickup(Transform parent)  //POLYMORPHISM
     {
         y = 0.3f; // Variable to be changed in child class
+        x = 0;  // Property cannot be changed
         pickUp.transform.SetParent(parent);
-        transform.Translate(0, -y, 0);
+        transform.Translate(x, -y, 0);
         hasPickUp = true;
     }
 
-    protected virtual void DropPickup()
+    protected virtual void DropPickup()  //ABSTRACTION - This method has been taken out of UPDATE
     {
+        y = 1f;
+        x = 0;
         pickUp.transform.SetParent(null);
-        transform.Translate(0, 1f, 0);
+        transform.Translate(x, y, 0);
         hasPickUp = false;
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -52,10 +54,11 @@ public class PickUp : MonoBehaviour  // INHERITANCE - parent class
             pickUp.SetActive(false);
             chestClosed.SetActive(false);
             chestOpen.SetActive(true);
+            endingText.SetActive(true);
             Debug.Log("Collided with " + other.gameObject.name);
             explosionParticle.Play();
-            playerAudio.PlayOneShot(openChestSound, 1.0f);
             hasPickUp = false;
+
         }
     }
 
